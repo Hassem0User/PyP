@@ -1,15 +1,19 @@
+import logging
+
 import psutil
 
 
 def list_open_ports():
-    print("Listing all open ports on the system:")
+    logging.info("Listing all open ports on the system:")
     try:
-        print("PID, Laddr, Status")
+        logging.info("PID, Laddr, Status")
         # List all open ports
         for conn in psutil.net_connections(kind='inet'):
-            print(f"PID: {conn.pid}, Laddr: {conn.laddr}, Status: {conn.status}")
+            logging.info("PID: %(conn.pid)s, Laddr: %(conn.laddr)s, Status: %(conn.status)s"
+                         % {"conn.pid": conn.pid, "conn.laddr": conn.laddr, "conn.status": conn.status}
+                         )
     except PermissionError:
-        print("PermissionError: You may need to run this script with elevated privileges (e.g., as an administrator).")
+        logging.info("PermissionError: You may need to run this script with elevated privileges (e.g., as an administrator).")
 
 
 list_open_ports()

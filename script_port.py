@@ -1,18 +1,20 @@
 import socket as sck
-
+import logging
 # Fast Script to iterate ports
 
-for port in range(1, 1024):
+for port in range(1, 1024):  # Define port range
     try:
-        # Pending to use an INFO logger in this line
-        s = sck.socket(sck.AF_INET, sck.SOCK_STREAM)
-        s.settimeout(1000)
-        s.connect((
+        logging.info('Initializating port scanning ')
+        s = sck.socket(sck.AF_INET, sck.SOCK_STREAM)  # Define connection parameter
+        s.settimeout(1000)  # Define time limit
+        s.connect((  # Define connection parameters
             '127.0.0.1',
             port
         ))
-        print('%d:OPEN' % port)
+        logging.info('%(port)s:OPEN' % {"port": port})
         s.close()
     except:
-        # Pending to use an ERROR logger in this line
+        logging.error('Cannot connect to port: %(port)s' % {"port": port})
         continue
+
+logging.info('Ended scan')

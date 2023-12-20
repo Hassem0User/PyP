@@ -1,3 +1,5 @@
+import logging
+
 from scapy.all import ARP, Ether, srp
 
 def scan_local_network(ip_range):
@@ -22,4 +24,5 @@ ip_range = "192.168.1.0/24"  # Define subnet interface
 active_devices = scan_local_network(ip_range)
 
 for device in active_devices:
-    print(f"IP Address: {device['ip']}, MAC Address: {device['mac']}")
+    logging.info("IP Address: %(device['ip'])s, MAC Address: %(device['mac'])s"
+                 % {"device['ip']": device['ip'], "device['mac']": device['mac']})
